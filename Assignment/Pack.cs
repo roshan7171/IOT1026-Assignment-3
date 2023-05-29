@@ -12,7 +12,7 @@ public class Pack
     // Default constructor sets the maxCount to 10 
     // maxVolume to 20 
     // maxWeight to 30
-    public Pack() :this(10, 20, 30) {}
+    public Pack() : this(10, 20, 30) { }
 
     // This constructor is not complete, but it is a good start.
     public Pack(int maxCount, float maxVolume, float maxWeight)
