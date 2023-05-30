@@ -2,12 +2,12 @@
 
 public class Pack
 {
-    private InventoryItem[] _items; // You can use another data structure here if you prefer.
+    private readonly InventoryItem[] _items; // You can use another data structure here if you prefer.
     // You may need another private member variable if you use an array data structure.
 
-    private int _maxCount;
-    private float _maxVolume;
-    private float _maxWeight;
+    private readonly int _maxCount;
+    private readonly float _maxVolume;
+    private readonly float _maxWeight;
 
     // Default constructor sets the maxCount to 10 
     // maxVolume to 20 
@@ -20,7 +20,6 @@ public class Pack
         _maxCount = maxCount;
         _maxVolume = maxVolume;
         _maxWeight = maxWeight;
-        _items[0] = new Sword(); // This generates  NullReferenceException
     }
 
     // This is called a getter
@@ -31,6 +30,7 @@ public class Pack
 
     public bool Add(InventoryItem item)
     {
+        float weight = item.GetWeight();
         throw new NotImplementedException();
     }
 
@@ -41,15 +41,46 @@ public class Pack
     }
 }
 
+// Come back to this once we learn about abstract classes.
 public class InventoryItem
 {
-    // Implement this class
+    private readonly float _volume;
+    private readonly float _weight;
+
+    public InventoryItem(float volume, float weight)
+    {
+        if (volume <= 0f || weight <= 0f)
+        {
+            throw new ArgumentOutOfRangeException($"An item can't have {volume} volume or {weight} weight");
+        }
+        _volume = volume;
+        _weight = weight;
+    }
+
+    // Getters
+    public float GetVolume()
+    {
+        return _volume;
+    }
+
+    public float GetWeight()
+    {
+        return _weight;
+    }
 }
 
 // Implement these classes - each inherits from InventoryItem
 // 1 line of code each - call base class constructor with appropriate arguments
-class Arrow : InventoryItem { }
-class Bow : InventoryItem { }
+class Arrow : InventoryItem
+{
+    public Arrow() : base(0.05f, 0.1f) { }
+}
+
+class Bow : InventoryItem
+{
+    public Bow() : base(1f, 4f) { }
+}
+
 class Rope : InventoryItem { }
 class Water : InventoryItem { }
 class Food : InventoryItem { }
